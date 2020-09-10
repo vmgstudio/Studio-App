@@ -1,0 +1,22 @@
+{
+  "name": "Icons2",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "efc3f240ef9ea8ea869a4136920bfefb",
+      "css": "spotify",
+      "code": 61884,
+      "src": "fontawesome5"
+    },
+    {
+      "uid": "4a9003c97b03ac0309c051a7916d0bd6",
+      "css": "heart_broken",
+      "code": 63401,
+      "src": "fontawesome5"
+    }
+  ]
+}

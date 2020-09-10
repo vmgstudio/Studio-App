@@ -1,0 +1,23 @@
+{
+    "name": "Stúdió",
+    "short_name": "Stúdió",
+    "start_url": "/v2/index.html",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#0175C2",
+    "description": "VMG Stúdió webalkalmazás",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/icon-152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon-1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ]
+}

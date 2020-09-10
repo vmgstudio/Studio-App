@@ -1,0 +1,11 @@
+0: login
+1: login in progress
+2: főoldal
+3: saját tárgyak
+4: Beolvasás
+5: eseménynaptár
+6: taglista
+7: profil
+8: napló
+9: új értesítés
+10: kiflikódbeütő
