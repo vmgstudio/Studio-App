@@ -23,6 +23,7 @@ class _NotiListPageState extends State<NotiListPage> {
       ),
       body: Hero(
           tag: "notipage",
+          flightShuttleBuilder: (BuildContext flightContext, Animation<double> animation, HeroFlightDirection flightDirection, BuildContext fromHeroContext, BuildContext toHeroContext) => Material(child: toHeroContext.widget),
           child: ListView.separated(
               separatorBuilder: (BuildContext context, int index) => Divider(
                     color: Color.fromARGB(255, 120, 120, 120),

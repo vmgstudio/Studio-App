@@ -425,6 +425,7 @@ class _HomePageState extends State<HomePage> {
                       width: MediaQuery.of(context).size.width,
                       child: Hero(
                         tag: "notipage",
+                        flightShuttleBuilder: (BuildContext flightContext, Animation<double> animation, HeroFlightDirection flightDirection, BuildContext fromHeroContext, BuildContext toHeroContext) => Material(child: toHeroContext.widget),
                         child: Card(
                           elevation: 1,
                           color: cardcolor1dp,

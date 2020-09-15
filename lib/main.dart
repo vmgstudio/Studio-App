@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 //import 'dart:ui' as ui;
 import 'package:studio_flutter/diallerpage.dart';
 import 'package:studio_flutter/homepage.dart';
@@ -233,201 +234,199 @@ class LoginState extends State<MyHomePage> {
   Widget drawer() {
     if (isadmin) {
       return ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: customblue[500],
-              ),
-              child: Image.asset('assets/studiologo_transparent.png'),
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: customblue[500],
             ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  updatestate(2);
-                },
-                child: ListTile(
-                  leading: Icon(Icons.home, color: Colors.white),
-                  title: Text('Főoldal'),
-                )),
-            InkWell(
+            child: Image.asset('assets/studiologo_transparent.png'),
+          ),
+          InkWell(
               onTap: () {
                 Navigator.pop(context);
-                updatestate(3);
+                updatestate(2);
               },
               child: ListTile(
-                leading: Icon(Icons.list, color: Colors.white),
-                title: Text('Saját tárgyak'),
-              ),
+                leading: Icon(Icons.home, color: Colors.white),
+                title: Text('Főoldal'),
+              )),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(3);
+            },
+            child: ListTile(
+              leading: Icon(Icons.list, color: Colors.white),
+              title: Text('Saját tárgyak'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(4);
-              },
-              child: ListTile(
-                leading: Icon(Icons.camera_alt, color: Colors.white),
-                title: Text('Beolvasás'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(4);
+            },
+            child: ListTile(
+              leading: Icon(Icons.camera_alt, color: Colors.white),
+              title: Text('Beolvasás'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(8);
-              },
-              child: ListTile(
-                leading: Icon(Icons.library_books, color: Colors.white),
-                title: Text('Napló'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(8);
+            },
+            child: ListTile(
+              leading: Icon(Icons.library_books, color: Colors.white),
+              title: Text('Napló'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(5);
-              },
-              child: ListTile(
-                leading: Icon(Icons.calendar_today, color: Colors.white),
-                title: Text('Eseménynaptár'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(5);
+            },
+            child: ListTile(
+              leading: Icon(Icons.calendar_today, color: Colors.white),
+              title: Text('Eseménynaptár'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(9);
-              },
-              child: ListTile(
-                leading: Icon(Icons.add_box, color: Colors.white),
-                title: Text('Új értesítés'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(9);
+            },
+            child: ListTile(
+              leading: Icon(Icons.add_box, color: Colors.white),
+              title: Text('Új értesítés'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(6);
-              },
-              child: ListTile(
-                leading: Icon(Icons.group, color: Colors.white),
-                title: Text('Taglista'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(6);
+            },
+            child: ListTile(
+              leading: Icon(Icons.group, color: Colors.white),
+              title: Text('Taglista'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(7);
-              },
-              child: ListTile(
-                leading: Icon(Icons.account_circle, color: Colors.white),
-                title: Text('Profil'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(7);
+            },
+            child: ListTile(
+              leading: Icon(Icons.account_circle, color: Colors.white),
+              title: Text('Profil'),
             ),
-            InkWell(
-              onTap: () {
-                if (!kIsWeb) {
-                  firebaseMessaging.deleteInstanceID();
-                }
-                addStringToSF("userid", '');
-                addStringToSF("apikey", "");
-                updatestate(0);
-              },
-              child: ListTile(
-                leading: Icon(Icons.power_settings_new, color: Colors.white),
-                title: Text('Kijelentkezés'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              if (!kIsWeb) {
+                firebaseMessaging.deleteInstanceID();
+              }
+              addStringToSF("userid", '');
+              addStringToSF("apikey", "");
+              updatestate(0);
+            },
+            child: ListTile(
+              leading: Icon(Icons.power_settings_new, color: Colors.white),
+              title: Text('Kijelentkezés'),
             ),
-            ListTile(
-              trailing: Text('v ' + version),
-              title: Text(name),
-            )
-          ],
-        
+          ),
+          ListTile(
+            trailing: Text('v ' + version),
+            title: Text(name),
+          )
+        ],
       );
     } else {
       return ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: customblue[500],
-              ),
-              child: Image.asset('assets/studiologo_transparent.png'),
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: customblue[500],
             ),
-            InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                  updatestate(2);
-                },
-                child: ListTile(
-                  leading: Icon(Icons.home, color: Colors.white),
-                  title: Text('Főoldal'),
-                )),
-            InkWell(
+            child: Image.asset('assets/studiologo_transparent.png'),
+          ),
+          InkWell(
               onTap: () {
                 Navigator.pop(context);
-                updatestate(3);
+                updatestate(2);
               },
               child: ListTile(
-                leading: Icon(Icons.list, color: Colors.white),
-                title: Text('Saját tárgyak'),
-              ),
+                leading: Icon(Icons.home, color: Colors.white),
+                title: Text('Főoldal'),
+              )),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(3);
+            },
+            child: ListTile(
+              leading: Icon(Icons.list, color: Colors.white),
+              title: Text('Saját tárgyak'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(4);
-              },
-              child: ListTile(
-                leading: Icon(Icons.camera_alt, color: Colors.white),
-                title: Text('Beolvasás'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(4);
+            },
+            child: ListTile(
+              leading: Icon(Icons.camera_alt, color: Colors.white),
+              title: Text('Beolvasás'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(5);
-              },
-              child: ListTile(
-                leading: Icon(Icons.calendar_today, color: Colors.white),
-                title: Text('Eseménynaptár'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(5);
+            },
+            child: ListTile(
+              leading: Icon(Icons.calendar_today, color: Colors.white),
+              title: Text('Eseménynaptár'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(6);
-              },
-              child: ListTile(
-                leading: Icon(Icons.group, color: Colors.white),
-                title: Text('Taglista'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(6);
+            },
+            child: ListTile(
+              leading: Icon(Icons.group, color: Colors.white),
+              title: Text('Taglista'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                updatestate(7);
-              },
-              child: ListTile(
-                leading: Icon(Icons.account_circle, color: Colors.white),
-                title: Text('Profil'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              updatestate(7);
+            },
+            child: ListTile(
+              leading: Icon(Icons.account_circle, color: Colors.white),
+              title: Text('Profil'),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-                addStringToSF("userid", '');
-                addStringToSF("apikey", "");
-                updatestate(0);
-              },
-              child: ListTile(
-                leading: Icon(Icons.power_settings_new, color: Colors.white),
-                title: Text('Kijelentkezés'),
-              ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              addStringToSF("userid", '');
+              addStringToSF("apikey", "");
+              updatestate(0);
+            },
+            child: ListTile(
+              leading: Icon(Icons.power_settings_new, color: Colors.white),
+              title: Text('Kijelentkezés'),
             ),
-            ListTile(
-              trailing: Text('v ' + version),
-              title: Text(name),
-            )
-          ],
-        
+          ),
+          ListTile(
+            trailing: Text('v ' + version),
+            title: Text(name),
+          )
+        ],
       );
     }
   }
@@ -623,7 +622,10 @@ class LoginState extends State<MyHomePage> {
       if (MediaQuery.of(context).size.width < 800) {
         return screens();
       } else
-        return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [Flexible(child: drawer()),Flexible(flex: 2, child: screens())]);
+        return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Flexible(child: drawer()),
+          Flexible(flex: 2, child: screens())
+        ]);
     });
   }
 
@@ -875,10 +877,51 @@ class LoginState extends State<MyHomePage> {
             // the App.build method, and use it to set our appbar title.
             title: titletext()),
         drawer: Drawer(child: drawer()),
-        //body: screens(),
-        body: screens(),
+        body: WillPopScope(
+            onWillPop: () {
+              if (stateid != 2)
+                updatestate(2);
+              else
+                _showExitDialog(context);
+            },
+            child: screens()),
         floatingActionButton: fab(),
       );
     }
   }
+}
+
+Future<void> _showExitDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: cardcolor1dp,
+        title: Text('Kilépés'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Biztos ki akarsz lépni az alkalmazásból?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Nem', style: TextStyle(color: Colors.white),),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text('Igen', style: TextStyle(color: Colors.red),),
+            onPressed: () {
+              Navigator.of(context).pop();
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
