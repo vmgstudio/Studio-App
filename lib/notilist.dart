@@ -64,13 +64,15 @@ class _PostDetailsState extends State<PostDetails> {
   TextEditingController commentsctrl = TextEditingController(text: '');
   Widget sendicon = Icon(Icons.send, color: Color.fromARGB(255, 191, 191, 191));
   ScrollController ctrl = new ScrollController();
-
+  double taglisth = 0;
+  int tagnum = 0;
+  String typedname = '';
+  int tagnumhandled = 0;
 
   @override
   Widget initState() {
     super.initState();
     comments = getcomments(post.topicId, post.topic);
-
   }
 
   _PostDetailsState(this.post);
@@ -129,9 +131,10 @@ class _PostDetailsState extends State<PostDetails> {
                                   children: [
                                     ConstrainedBox(
                                       constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.of(context).size.width -
-                                                  100),
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              130),
                                       child: Card(
                                         color: cardcolor2dp,
                                         shape: RoundedRectangleBorder(
@@ -145,84 +148,6 @@ class _PostDetailsState extends State<PostDetails> {
                                             mainAxisSize: MainAxisSize.min,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: [
-                                              Text(commentdata.comments[i].userName),
-                                              Text(
-                                                commentdata.comments[i].commentBody,
-                                                style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 191, 191, 191),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    PopupMenuButton<Delete>(
-                                      onSelected: (Delete a) {
-                                        Future<DeleteItemData> delete =
-                                            deleteComment(commentdata
-                                                .comments[i].commentId
-                                                .toString());
-                                        delete.then((value) => setState(() {
-                                              comments = getcomments(
-                                                  post.topicId, post.topic);
-                                            }));
-                                      },
-                                      itemBuilder: (BuildContext context) =>
-                                          <PopupMenuEntry<Delete>>[
-                                        PopupMenuItem<Delete>(
-                                            value: Delete.delete,
-                                            child: Text('Törlés', style: TextStyle(color: Colors.black),))
-                                      ],
-                                      icon: Icon(
-                                        Icons.more_vert,
-                                        color: Color.fromARGB(255, 191, 191, 191),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Text(
-                                  getdate(),
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 191, 191, 191),
-                                  ),
-                                )
-                              ],
-                            ));
-                          } else {
-                            commentwidgets.add(Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  getdate(),
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 191, 191, 191),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ConstrainedBox(
-                                      constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.of(context).size.width -
-                                                  100),
-                                      child: Card(
-                                        color: cardcolor2dp,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(18),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
                                             children: [
                                               Text(commentdata
                                                   .comments[i].userName),
@@ -254,118 +179,43 @@ class _PostDetailsState extends State<PostDetails> {
                                           <PopupMenuEntry<Delete>>[
                                         PopupMenuItem<Delete>(
                                             value: Delete.delete,
-                                            child: Text('Törlés', style: TextStyle(color: Colors.black),))
+                                            child: Text(
+                                              'Törlés',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ))
                                       ],
                                       icon: Icon(
                                         Icons.more_vert,
-                                        color: Color.fromARGB(255, 191, 191, 191),
+                                        color:
+                                            Color.fromARGB(255, 191, 191, 191),
                                       ),
                                     )
                                   ],
                                 ),
+                                Text(
+                                  getdate(),
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 191, 191, 191),
+                                  ),
+                                )
                               ],
                             ));
-                          }
-                        } else {
-                           if (commentdata.comments[i].userId.toString() !=
-                            userId) {
-                          commentwidgets.add(Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                                100),
-                                    child: Card(
-                                      color: cardcolor2dp,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(18),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(commentdata.comments[i].userName),
-                                            Text(
-                                              commentdata.comments[i].commentBody,
-                                              style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 191, 191, 191),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                          } else {
+                            commentwidgets.add(Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  getdate(),
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 191, 191, 191),
                                   ),
-                                  
-                                ],
-                              ),
-                              Text(
-                                getdate(),
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 191, 191, 191),
                                 ),
-                              )
-                            ],
-                          ));
-                        } else {
-                          commentwidgets.add(Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                getdate(),
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 191, 191, 191),
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                        maxWidth:
-                                            MediaQuery.of(context).size.width -
-                                                100),
-                                    child: Card(
-                                      color: cardcolor2dp,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(18),
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(commentdata
-                                                .comments[i].userName),
-                                            Text(
-                                              commentdata
-                                                  .comments[i].commentBody,
-                                              style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 191, 191, 191),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  PopupMenuButton<Delete>(
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    PopupMenuButton<Delete>(
                                       onSelected: (Delete a) {
                                         Future<DeleteItemData> delete =
                                             deleteComment(commentdata
@@ -380,18 +230,192 @@ class _PostDetailsState extends State<PostDetails> {
                                           <PopupMenuEntry<Delete>>[
                                         PopupMenuItem<Delete>(
                                             value: Delete.delete,
-                                            child: Text('Törlés', style: TextStyle(color: Colors.black),))
+                                            child: Text(
+                                              'Törlés',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ))
                                       ],
                                       icon: Icon(
                                         Icons.more_vert,
-                                        color: Color.fromARGB(255, 191, 191, 191),
+                                        color:
+                                            Color.fromARGB(255, 191, 191, 191),
                                       ),
-                                    )
-                                ],
-                              ),
-                            ],
-                          ));
-                        }
+                                    ),
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              130),
+                                      child: Card(
+                                        color: cardcolor2dp,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(18),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(commentdata
+                                                  .comments[i].userName),
+                                              Text(
+                                                commentdata
+                                                    .comments[i].commentBody,
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 191, 191, 191),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ));
+                          }
+                        } else {
+                          if (commentdata.comments[i].userId.toString() !=
+                              userId) {
+                            commentwidgets.add(Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              100),
+                                      child: Card(
+                                        color: cardcolor2dp,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(18),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(commentdata
+                                                  .comments[i].userName),
+                                              Text(
+                                                commentdata
+                                                    .comments[i].commentBody,
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 191, 191, 191),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  getdate(),
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 191, 191, 191),
+                                  ),
+                                )
+                              ],
+                            ));
+                          } else {
+                            commentwidgets.add(Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  getdate(),
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 191, 191, 191),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    PopupMenuButton<Delete>(
+                                      onSelected: (Delete a) {
+                                        Future<DeleteItemData> delete =
+                                            deleteComment(commentdata
+                                                .comments[i].commentId
+                                                .toString());
+                                        delete.then((value) => setState(() {
+                                              comments = getcomments(
+                                                  post.topicId, post.topic);
+                                            }));
+                                      },
+                                      itemBuilder: (BuildContext context) =>
+                                          <PopupMenuEntry<Delete>>[
+                                        PopupMenuItem<Delete>(
+                                            value: Delete.delete,
+                                            child: Text(
+                                              'Törlés',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ))
+                                      ],
+                                      icon: Icon(
+                                        Icons.more_vert,
+                                        color:
+                                            Color.fromARGB(255, 191, 191, 191),
+                                      ),
+                                    ),
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              130),
+                                      child: Card(
+                                        color: cardcolor2dp,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(18),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(commentdata
+                                                  .comments[i].userName),
+                                              Text(
+                                                commentdata
+                                                    .comments[i].commentBody,
+                                                style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 191, 191, 191),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ));
+                          }
                         }
                       }
                       return Column(children: commentwidgets);
@@ -411,46 +435,124 @@ class _PostDetailsState extends State<PostDetails> {
       ),
       bottomNavigationBar: Padding(
         padding: MediaQuery.of(context).viewInsets,
-        child: Container(
-          height: 60,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: TextFormField(
-              controller: commentsctrl,
-              maxLines: null,
-              decoration: InputDecoration(
-                filled: false,
-                fillColor: cardcolor2dp,
-                border: OutlineInputBorder(),
-                labelText: 'Hozzászólás...',
-                labelStyle: TextStyle(
-                  color: Color.fromARGB(255, 191, 191, 191),
-                ),
-                suffixIcon: IconButton(
-                  icon: sendicon,
-                  onPressed: () {
-                    if (commentsctrl.text != '') {
-                      setState(() {
-                        sendicon = CircularProgressIndicator();
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              height: taglisth,
+              child: Card(
+                color: cardcolor2dp,
+                child: Builder(builder: (c) {
+                  List<Users> fapiUsers = new List<Users>();
+                  
+                  if (typedname == "") {
+                    fapiUsers = apiUsers;
+                  } else {
+                    for (var item in apiUsers) {
+                      if (item.name
+                              .toLowerCase()
+                              .contains(typedname.toLowerCase()) ||
+                          item.name.contains(typedname.toLowerCase())) {
+                        fapiUsers.add(item);
+                      }
+                    }
+                  }
+                  return ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        height: 0,
+                      );
+                    },
+                    itemCount: fapiUsers.length,
+                    itemBuilder: (context, index) {
+                      Users cu = fapiUsers[index];
+                      return ListTile(
+                        onTap: () {
+                          commentsctrl.text = commentsctrl.text.substring(0, commentsctrl.text.length- typedname.length);
+                          commentsctrl.text += cu.name + ' ';
+                          commentsctrl.selection = TextSelection.fromPosition(
+                              TextPosition(offset: commentsctrl.text.length));
+                          setState(() {
+                            taglisth = 0;
+                            tagnumhandled += 1;
+                          });
+                        },
+                        dense: true,
+                        title: Text('@' + cu.name),
+                      );
+                    },
+                  );
+                }),
+              ),
+            ),
+            Container(
+              height: 60,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: TextFormField(
+                  controller: commentsctrl,
+                  onChanged: (t) {
+                    if (t.indexOf('@') != -1) {
+                      print('open dialog');
+                      tagnum = 0;
+                      typedname = commentsctrl.text.substring(commentsctrl.text.lastIndexOf('@')+1);
+                      t.runes.forEach((int rune) {
+                        var character = new String.fromCharCode(rune);
+                        if (character == '@') {
+                          tagnum++;
+                        }
                       });
-                      Future<DeleteItemData> newcomment = newComment(
-                          post.topic, post.topicId, commentsctrl.text);
-                      newcomment.then((value) {
-                        commentsctrl.text = '';
-                        comments = getcomments(post.topicId, post.topic);
+                      if (tagnum != tagnumhandled) {
                         setState(() {
-                          sendicon = Icon(Icons.send,
-                              color: Color.fromARGB(255, 191, 191, 191));
+                          taglisth = 150;
                         });
+                      }
+                    } else {
+                      tagnum = 0;
+                      setState(() {
+                        taglisth = 0;
+                        tagnumhandled = 0;
                       });
                     }
                   },
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    filled: false,
+                    fillColor: cardcolor2dp,
+                    border: OutlineInputBorder(),
+                    labelText: 'Hozzászólás...',
+                    labelStyle: TextStyle(
+                      color: Color.fromARGB(255, 191, 191, 191),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: sendicon,
+                      onPressed: () {
+                        if (commentsctrl.text != '') {
+                          setState(() {
+                            sendicon = CircularProgressIndicator();
+                          });
+                          Future<DeleteItemData> newcomment = newComment(
+                              post.topic, post.topicId, commentsctrl.text);
+                          newcomment.then((value) {
+                            commentsctrl.text = '';
+                            comments = getcomments(post.topicId, post.topic);
+                            setState(() {
+                              sendicon = Icon(Icons.send,
+                                  color: Color.fromARGB(255, 191, 191, 191));
+                            });
+                          });
+                        }
+                      },
+                    ),
+                    prefixIcon: Icon(Icons.comment,
+                        color: Color.fromARGB(255, 191, 191, 191)),
+                  ),
                 ),
-                prefixIcon: Icon(Icons.comment,
-                    color: Color.fromARGB(255, 191, 191, 191)),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

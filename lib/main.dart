@@ -230,10 +230,9 @@ class LoginState extends State<MyHomePage> {
     );
   }
 
-  Drawer drawer() {
+  Widget drawer() {
     if (isadmin) {
-      return Drawer(
-        child: ListView(
+      return ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
@@ -340,11 +339,10 @@ class LoginState extends State<MyHomePage> {
               title: Text(name),
             )
           ],
-        ),
+        
       );
     } else {
-      return Drawer(
-        child: ListView(
+      return ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
@@ -429,7 +427,7 @@ class LoginState extends State<MyHomePage> {
               title: Text(name),
             )
           ],
-        ),
+        
       );
     }
   }
@@ -622,10 +620,10 @@ class LoginState extends State<MyHomePage> {
 
   Widget layoutbuilder() {
     return LayoutBuilder(builder: (context, constraints) {
-      if (MediaQuery.of(context).size.width < 600) {
-        //return screens();
+      if (MediaQuery.of(context).size.width < 800) {
+        return screens();
       } else
-        return Row(children: [drawer(), screens()]);
+        return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [Flexible(child: drawer()),Flexible(flex: 2, child: screens())]);
     });
   }
 
@@ -876,7 +874,8 @@ class LoginState extends State<MyHomePage> {
             // Here we take the value from the MyHomePage object that was created by
             // the App.build method, and use it to set our appbar title.
             title: titletext()),
-        drawer: drawer(),
+        drawer: Drawer(child: drawer()),
+        //body: screens(),
         body: screens(),
         floatingActionButton: fab(),
       );
