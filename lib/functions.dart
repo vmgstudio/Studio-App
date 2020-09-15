@@ -15,6 +15,7 @@ String apiKey = "";
 bool isloggedin = false;
 String loginmessage = '';
 String name = '';
+String apiversion = '';
 bool isadmin = false;
 List<Users> apiUsers;
 bool isscanning = true;
@@ -32,6 +33,7 @@ Future<ValidateData> validate() async {
         ValidateData.fromJson(json.decode(response.body));
     if (validateData.status) {
       name = validateData.name;
+      apiversion = validateData.api_version;
 
       Future<List<Events>> data = fetcheventdata();
       data.then((value) {
@@ -94,15 +96,18 @@ class ValidateData {
   final int admin;
   final String message;
   final String name;
+  final String api_version;
 
-  ValidateData({this.status, this.admin, this.message, this.name});
+  ValidateData(
+      {this.api_version, this.status, this.admin, this.message, this.name});
 
   factory ValidateData.fromJson(Map<String, dynamic> json) {
     return ValidateData(
         status: json['status'],
         message: json['message'],
         admin: json['admin'],
-        name: json['name']);
+        name: json['name'],
+        api_version: json['api_version']);
   }
 }
 
@@ -463,6 +468,7 @@ Future<List<Events>> fetcheventdata() async {
     throw Exception('Failed to load data');
   }
 }
+
 Future<List<SchoolYears>> fetchyeardata() async {
   final response = await http.get(apiUrl +
       "?key=" +
@@ -961,8 +967,11 @@ Future<DeleteItemData> newComment(
 Future<DeleteItemData> deleteComment(
   String commentId,
 ) async {
-  final response = await http.get(
-      apiUrl + "?action=deleteComment&key=" + apiKey + "&commentid=" + commentId);
+  final response = await http.get(apiUrl +
+      "?action=deleteComment&key=" +
+      apiKey +
+      "&commentid=" +
+      commentId);
   if (response.statusCode == 200) {
     DeleteItemData data = DeleteItemData.fromJson(json.decode(response.body));
     return data;

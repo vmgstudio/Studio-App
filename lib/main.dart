@@ -29,7 +29,7 @@ Stream get eventaddedDone => eventadded.stream;
 StreamController onmessagectrl = new StreamController.broadcast();
 Stream get onmessagectrlDone => onmessagectrl.stream;
 
-String version = "5.8.2";
+String version = "5.8.6";
 Color cardcolor1dp = Color.fromARGB(255, 29, 29, 29);
 Color cardcolor2dp = Color.fromARGB(255, 33, 33, 33);
 MaterialColor customblue = MaterialColor(0xFF0071bc, {
@@ -336,7 +336,7 @@ class LoginState extends State<MyHomePage> {
             ),
           ),
           ListTile(
-            trailing: Text('v ' + version),
+            trailing: Text('v ' + version + ' api:v '+ apiversion),
             title: Text(name),
           )
         ],
