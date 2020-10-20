@@ -31,6 +31,7 @@ dependencies:
   mysql1: ^0.17.1
   http: ^0.12.2
   crypto: any
+  animations: ^1.1.2
   shared_preferences: any
 
 dev_dependencies:
