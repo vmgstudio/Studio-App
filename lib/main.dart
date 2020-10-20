@@ -17,6 +17,7 @@ void main() {
 
 class Consts {
   static int mobileWidth = 1000;
+  static Color cardcolor = Color(0xff212121);
 }
 
 class MyApp extends StatelessWidget {
@@ -286,24 +287,43 @@ class TopBar extends StatelessWidget {
                 Expanded(
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: FlatButton(
-                      hoverColor: Colors.grey[850],
-                      splashColor: Colors.grey[500],
-                      highlightColor: Colors.grey[800],
-                      onPressed: () {
-                        Navigator.popAndPushNamed(
-                          context,
-                          '/',
-                        );
-                        UserData.logout();
-                      },
-                      child: Text(
-                        "KIJELENTKEZÉS",
-                        style: Theme.of(context)
-                            .textTheme
-                            .button
-                            .copyWith(color: Colors.white),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 8, right: 8),
+                      child: Material(
+                        shape: CircleBorder(),
+                        clipBehavior: Clip.antiAlias,
+                        color: Consts.cardcolor,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.account_circle,
+                            color: Colors.white,
+                            size: 36,
+                          ),
+                        ),
                       ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: FlatButton(
+                    hoverColor: Colors.grey[850],
+                    splashColor: Colors.grey[500],
+                    highlightColor: Colors.grey[800],
+                    onPressed: () {
+                      Navigator.popAndPushNamed(
+                        context,
+                        '/',
+                      );
+                      UserData.logout();
+                    },
+                    child: Text(
+                      "KIJELENTKEZÉS",
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          .copyWith(color: Colors.white),
                     ),
                   ),
                 ),
@@ -457,6 +477,10 @@ class UserData {
   static String apiV;
   static String apiurl = "https://vmg-studio.hu/api/api.php";
 
+  static bool ismobile() {
+    return !(MediaQuery.of(context).size.width < Consts.mobileWidth);
+  }
+
   static void readPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserData.apikey = prefs.getString('apikey') ?? "";
@@ -500,7 +524,7 @@ class UserData {
     }
   }
 
-  static void login(String uid, String pwd) async {
+  static Future<String> login(String uid, String pwd) async {
     final response = await http.get(apiurl +
         "?action=requestUIDvalidation&uid=" +
         uid +
@@ -514,7 +538,9 @@ class UserData {
       if (r.status) {
         writePrefs();
         validate();
-      }
+        return "";
+      } else
+        return r.message;
     }
   }
 }
